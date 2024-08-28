@@ -1,2 +1,3 @@
-public interface random {
+public interface Calculation {
+    int sunTotal();
 }
