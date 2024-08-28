@@ -1,28 +1,56 @@
+import java.util.*;
+
 public class Combinations implements Calculation {
-    private int BANANA = 10;
-    private int STRAWBERRY = 20;
-    private int STAR = 40;
+    private final List<Symbol> symbols;
+    private final int totalPoints;
 
-    public Combinations(int BANANA, int STRAWBERRY, int STAR) {
-        this.BANANA = BANANA;
-        this.STRAWBERRY = STRAWBERRY;
-        this.STAR = STAR;
+    public Combinations(int drawNumber) {
+        symbols = new ArrayList<>();
+        totalPoints = calculateTotalPoints(drawNumber);
     }
 
-    public int getBANANA() {
-        return BANANA;
+    private int calculateTotalPoints(int drawNumber) {
+        int points = 0;
+
+        for (int index = 0; index < drawNumber; index++) {
+            Roulette roulette = new Roulette();
+            Symbol symbol = roulette.getSymbol();
+            symbols.add(symbol);
+            points += symbol.getPoints();
+        }
+
+        //Caso sejam iguais
+        if (equalSymbols()) {
+            points += points * 100; // Bonus
+        }
+
+        return points;
     }
 
-    public int getSTRAWBERRY() {
-        return STRAWBERRY;
-    }
+    private boolean equalSymbols()  {
+        Symbol initial = symbols.get(0);
 
-    public int getSTAR() {
-        return STAR;
+        for (Symbol symbol : symbols) {
+            if (symbol != initial) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     @Override
     public int sunTotal() {
-        return BANANA + STRAWBERRY + STAR;
+        return totalPoints;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Symbol symbol : symbols) {
+            sb.append(symbol.getLowerCaseName()).append(" ");
+        }
+        return "Sequencia: " + "|" + sb.toString().trim() +"|"+ " \nTotal Points: " + totalPoints;
     }
 }
+

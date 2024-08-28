@@ -1,40 +1,40 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 public class AppSystem {
     private List<Combinations> combinations;
-    private Scanner sc;
 
     public AppSystem() {
         this.combinations = new ArrayList<>();
-        this.sc = new Scanner(System.in);
     }
 
     public void run() {
-        int control = 0;
-        while (control == 0) {
+        boolean running = true;
+        while (running) {
             int option = IO.menu();
+
             if (option == 1) {
-                Combinations combination = createEasy(); // Modo fácil
+                Combinations combination = createCombinations(3); // 3 sorteios
                 combinations.add(combination);
-                System.out.println("TOTAL: " + combination.sunTotal());
+                System.out.println(combination);
+            } else if (option == 2) {
+                Combinations combination = createCombinations(5); // 5 sorteios
+                combinations.add(combination);
+                System.out.println(combination);
+            } else if (option == 3) {
+                Combinations combination = createCombinations(7); // 7 sorteios
+                combinations.add(combination);
+                System.out.println(combination);
             } else if (option == 0) {
-                control = 1;
+                running = false;
                 System.out.println("Fim do jogo!");
             } else {
-                System.out.println("Erro! Tente novamente");
+                System.out.println("Opção inválida! Tente novamente.");
             }
         }
-        sc.close();
     }
 
-    private Combinations createEasy() {
-        System.out.println("Roletando...");
-        Roulette roleta1 = new Roulette();
-        Roulette roleta2 = new Roulette();
-        Roulette roleta3 = new Roulette();
-
-        return new Combinations(roleta1.getValue(), roleta2.getValue(), roleta3.getValue());
+    private Combinations createCombinations(int numberOfDraws) {
+        return new Combinations(numberOfDraws);
     }
 }

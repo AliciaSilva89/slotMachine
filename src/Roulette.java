@@ -1,15 +1,16 @@
 import java.util.Random;
 
 public class Roulette {
-    private int value;
+    private static final Random RANDOM = new Random();
+    private final Symbol symbol;
 
     public Roulette() {
-        Random random = new Random();
-        this.value = random.nextInt(3);
+        Symbol[] symbols = Symbol.values();
+        this.symbol = symbols[RANDOM.nextInt(symbols.length)];
     }
 
-
-    public int getValue() {
-        return value;
+    public Symbol getSymbol() {
+        return symbol;
     }
 }
+
